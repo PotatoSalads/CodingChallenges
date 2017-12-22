@@ -1,4 +1,4 @@
-/*
+/* Instructions: Prime Reduction
 Consider the prime number 23. 
 
 If we sum the square of its digits we get: 2^2 + 3^2 = 13, 
@@ -55,8 +55,6 @@ function isPrime(value) {
     return true;
 }
 
-// pretty sure I overcomplicated this--but it was fun
-
 function primeReduction(a, b) {
   let min = a;
   let max = b;
@@ -71,3 +69,46 @@ function primeReduction(a, b) {
   return counts;
 }
 primeReduction(1, 25);
+
+/* Model Solution */
+function primeReduction(a, b) {
+  function isPrime(n) {
+    if (n < 2) return false;
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+      if (n % i === 0) return false;
+    }
+    return true;
+  }
+  const arr = [];
+  function reduction(n) {
+    if (arr.includes(n)) {
+      arr.length = 0;
+      return false;
+    }
+    arr.push(n);
+    if (n === 1) {
+    arr.length = 0;
+    return true;
+    }
+    let hold = 0;
+    let num = n;
+    while (num > 0) {
+      hold += Math.pow(num % 10, 2);
+      num -= num % 10;
+      num /= 10;
+    }
+    return reduction(hold);
+  }
+  let count = 0;
+  for (let i = a; i < b; i++) {
+    if (isPrime(i)) {
+      if (reduction(i)) {
+         count++;
+      }
+    }
+    // arr = [];
+  }
+  return count;
+}
+
+console.log(primeReduction(2,8));
