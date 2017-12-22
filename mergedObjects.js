@@ -65,3 +65,17 @@ mergeObjects([
 {H: '8', I: 'Seven'},
 {B: 'Two', Z: '26'}
 ]);
+
+/* Model Solution */
+
+function mergeObjects(arr) {
+  newObj = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    for (var key in arr[i]) {
+      if (!newObj[key] || newObj[key] !== arr[i][key]) {
+        newObj[key] = arr[i][key];
+      }
+    }
+  }
+  return newObj;
+}
